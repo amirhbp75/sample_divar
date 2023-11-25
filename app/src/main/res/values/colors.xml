@@ -6,4 +6,5 @@
     <color name="border">#D5D5D5</color>
     <color name="onMainPrimary">#0E0E0E</color>
     <color name="windowBackground">#FFFFFF</color>
+    <color name="onPrimaryButton">#FFFFFF</color>
 </resources>
