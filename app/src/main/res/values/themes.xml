@@ -1,8 +1,19 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.DivarInterview" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:statusBarColor">@color/windowBackground</item>
+
+        <!-- Font theme -->
+        <item name="textAppearanceRegularText">@style/TextAppearance.Text.Regular</item>
+        <item name="textAppearanceBoldText">@style/TextAppearance.Text.Bold</item>
+        <item name="textAppearanceExtraBoldText">@style/TextAppearance.Text.BoldExtra</item>
+
+        <!-- Type theme -->
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="Theme.DivarInterview" parent="Base.Theme.DivarInterview" />

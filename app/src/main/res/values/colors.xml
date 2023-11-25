@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#A32526</color>
+    <color name="box">#F1F1F1</color>
+    <color name="onBoxSecondary">#4E4E4E</color>
+    <color name="border">#D5D5D5</color>
+    <color name="onMainPrimary">#0E0E0E</color>
+    <color name="windowBackground">#FFFFFF</color>
 </resources>
