@@ -7,4 +7,5 @@
     <color name="onMainPrimary">#0E0E0E</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="onPrimaryButton">#FFFFFF</color>
+    <color name="ripple">#FCEEED</color>
 </resources>

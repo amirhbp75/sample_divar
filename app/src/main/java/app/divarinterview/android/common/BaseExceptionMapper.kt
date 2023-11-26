@@ -23,7 +23,7 @@ class BaseExceptionMapper {
                     else -> {
                         BaseException(
                             BaseException.Type.TOAST,
-                            localMessage = R.string.error_unknown
+                            localMessage = localMessage
                         )
                     }
                 }

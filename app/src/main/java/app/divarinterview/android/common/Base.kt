@@ -83,16 +83,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseView {
     }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
-
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
-    }
 }
 
 interface BaseView {

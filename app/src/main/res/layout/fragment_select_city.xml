@@ -30,7 +30,7 @@
                 android:textAppearance="@style/TextAppearance.Text.Regular"
                 android:textColor="@color/onMainPrimary"
                 android:textColorHint="@color/onBoxSecondary"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
 
             <ProgressBar
                 android:id="@+id/searchCityNamePb"
@@ -46,10 +46,10 @@
 
         <TextView
             android:id="@+id/findMyCurrentCityTv"
+            style="@style/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="5dp"
-            android:background="?selectableItemBackground"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
@@ -57,30 +57,28 @@
             android:text="@string/select_city_current_location"
             android:textAppearance="?textAppearanceRegularText"
             android:textColor="@color/onMainPrimary"
-            android:textSize="16sp"
+            android:textSize="17sp"
             app:drawableStartCompat="@drawable/ic_gps_24dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="@string/select_city_list_head"
             android:textAppearance="?textAppearanceBoldText"
             android:textColor="@color/onMainPrimary"
-            android:textSize="18sp" />
+            android:textSize="19sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cityListRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="10dp"
-            android:clipToPadding="false"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
+            android:clipToPadding="false" />
 
     </LinearLayout>
 

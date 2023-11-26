@@ -7,4 +7,13 @@
         <item name="postSplashScreenTheme">@style/Base.Theme.DivarInterview</item>
     </style>
 
+    <style name="Theme.DivarInterview.selectableItem">
+        <item name="colorControlHighlight">@color/ripple</item>
+    </style>
+
+    <style name="selectableItemBackground">
+        <item name="android:theme">@style/Theme.DivarInterview.selectableItem</item>
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+
 </resources>
