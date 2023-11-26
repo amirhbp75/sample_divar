@@ -7,7 +7,20 @@
 
     <fragment
         android:id="@+id/welcomeFragment"
-        tools:layout="@layout/fragment_welcome"
         android:name="app.divarinterview.android.ui.welcome.WelcomeFragment"
-        android:label="WelcomeFragment" />
+        android:label="WelcomeFragment"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/action_welcomeFragment_to_selectCityFragment"
+            app:destination="@id/selectCityFragment"
+            app:enterAnim="@anim/slide_in_left_add_fragment"
+            app:exitAnim="@anim/slide_out_right_add_fragment"
+            app:popEnterAnim="@anim/slide_in_right_pop_fragment"
+            app:popExitAnim="@anim/slide_out_left_pop_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectCityFragment"
+        android:name="app.divarinterview.android.ui.city.SelectCityFragment"
+        android:label="SelectCityFragment"
+        tools:layout="@layout/fragment_select_city" />
 </navigation>

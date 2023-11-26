@@ -3,4 +3,9 @@
 
     <string name="welcome_slogan">تسک مصاحبه شغلی دیوار</string>
     <string name="welcome_login_btn">ورود به برنامه</string>
+
+    <string name="select_city_input_hint">شهر خود را انتخاب نمایید</string>
+    <string name="select_city_current_location">انتخاب شهر فعلی من</string>
+    <string name="select_city_current_location_loading">در حال دریافت شهر شما…</string>
+    <string name="select_city_list_head">لیست شهرها</string>
 </resources>
