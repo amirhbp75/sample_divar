@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.children
@@ -12,7 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import app.divarinterview.android.R
+import app.divarinterview.android.utils.gotoFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), BaseView {
     override val rootView: CoordinatorLayout?
@@ -39,8 +45,14 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), BaseView {
         super.onCreate(savedInstanceState)
         _binding = createBinding()
         setContentView(_binding?.root)
+
+        EventBus.getDefault().register(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
 
     abstract fun createBinding(): VB
 
@@ -71,6 +83,16 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseView {
     }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
 }
 
 interface BaseView {
@@ -90,6 +112,45 @@ interface BaseView {
 
                 loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun errorEvent(exception: BaseException) {
+        viewContext?.let { context ->
+            when (exception.type) {
+                BaseException.Type.AUTHORIZATION -> {
+                    gotoFragment(context, R.id.welcomeFragment)
+
+                    showToast(
+                        exception.serverMessage ?: context.getString(R.string.error_user_auth)
+                    )
+                }
+
+                BaseException.Type.TOAST -> {
+                    showToast(
+                        exception.serverMessage ?: context.getString(exception.localMessage)
+                    )
+                }
+
+                BaseException.Type.SNACKBAR -> {
+                    showSnackbar(
+                        exception.serverMessage ?: context.getString(exception.localMessage)
+                    )
+                }
+            }
+        }
+    }
+
+    fun showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
+        viewContext?.let {
+            Toast.makeText(it, message, duration).show()
+        }
+    }
+
+    fun showSnackbar(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+        rootView?.let {
+            Snackbar.make(it, message, duration).show()
         }
     }
 }

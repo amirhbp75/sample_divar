@@ -16,16 +16,16 @@ suspend fun <T> callApi(call: suspend () -> Response<T>) = flow {
     if (response.isSuccessful) {
         response.body()?.let {
             emit(Resource.Success(it))
-        } ?: emit(Resource.Error(R.string.error_fetch_data, null, null))
+        } ?: emit(Resource.Error(R.string.error_fetch_data))
     } else {
         val errorBodyJson = org.json.JSONObject(response.errorBody()!!.string())
         emit(Resource.Error(R.string.error_fetch_data, response.code(), errorBodyJson))
     }
 }.catch { e ->
     if (e is IOException)
-        emit(Resource.Error(R.string.error_connection, null, null))
+        emit(Resource.Error(R.string.error_connection))
     else
-        emit(Resource.Error(R.string.error_fetch_data, null, null))
+        emit(Resource.Error(R.string.error_fetch_data))
 
 }.flowOn(Dispatchers.IO)
 

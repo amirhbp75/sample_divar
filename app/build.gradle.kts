@@ -47,6 +47,7 @@ dependencies {
     val gsonVersion = "2.10.1"
     val retrofitVersion = "2.9.0"
     val coroutineVersion = "1.7.3"
+    val eventbusVersion = "3.3.1"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -72,6 +73,9 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
-    //coroutine
+    // Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
+
+    // Eventbus
+    implementation("org.greenrobot:eventbus:$eventbusVersion")
 }

@@ -12,5 +12,6 @@
 
     <string name="error_fetch_data">خطا در دریافت اطلاعات!</string>
     <string name="error_connection">خطا در ارتباط با سرور!</string>
-
+    <string name="error_unknown">خطای نامشخص</string>
+    <string name="error_user_auth">شناسه\u200cی کاربر نامعتبر است.</string>
 </resources>

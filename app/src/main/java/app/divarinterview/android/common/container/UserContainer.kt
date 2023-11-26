@@ -1,5 +1,6 @@
 package app.divarinterview.android.common.container
 
+
 object UserContainer {
     var token: String? = null
         private set
