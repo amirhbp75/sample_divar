@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
+import app.divarinterview.android.R
+import kotlinx.coroutines.flow.MutableStateFlow
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), BaseView {
     override val rootView: CoordinatorLayout?
@@ -73,6 +76,26 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseView {
 interface BaseView {
     val rootView: CoordinatorLayout?
     val viewContext: Context?
+
+    fun setWindowProgressIndicator(mustShow: Boolean) {
+        rootView?.let {
+            viewContext?.let { context ->
+                var loadingView = it.findViewById<View>(R.id.loadingView)
+                if (loadingView == null && mustShow) {
+                    loadingView =
+                        LayoutInflater.from(context)
+                            .inflate(R.layout.view_window_loading, it, false)
+                    it.addView(loadingView)
+                }
+
+                loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
+            }
+        }
+    }
+}
+
+abstract class BaseViewModel : ViewModel() {
+    var windowLoadingState = MutableStateFlow(false)
 }
 
 

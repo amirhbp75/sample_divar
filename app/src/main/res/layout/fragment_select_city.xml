@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/searchCityNameEt"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/inputHeight"
-            android:background="@drawable/bg_primary_input_corner_12dp"
-            android:drawableEnd="@drawable/ic_location_26dp"
-            android:hint="@string/select_city_input_hint"
-            android:paddingStart="15dp"
-            android:inputType="text"
-            android:drawablePadding="10dp"
-            android:paddingEnd="15dp"
-            android:textAppearance="@style/TextAppearance.Text.Regular"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <EditText
+                android:id="@+id/searchCityNameEt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/inputHeight"
+                android:background="@drawable/bg_primary_input_corner_12dp"
+                android:drawableEnd="@drawable/ic_location_26dp"
+                android:drawablePadding="10dp"
+                android:hint="@string/select_city_input_hint"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textAppearance="@style/TextAppearance.Text.Regular"
+                android:textColor="@color/onMainPrimary"
+                android:textColorHint="@color/onBoxSecondary"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:id="@+id/searchCityNamePb"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="15dp"
+                android:background="@color/box"
+                android:indeterminateTint="@color/primary"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/findMyCurrentCityTv"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="?selectableItemBackground"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/select_city_current_location"
+            android:textAppearance="?textAppearanceRegularText"
             android:textColor="@color/onMainPrimary"
-            android:textColorHint="@color/onBoxSecondary"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_gps_24dp" />
 
-        <ProgressBar
-            android:id="@+id/searchCityNamePb"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="15dp"
-            android:background="@color/box"
-            android:indeterminateTint="@color/primary"
-            android:visibility="gone" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/select_city_list_head"
+            android:textAppearance="?textAppearanceBoldText"
+            android:textColor="@color/onMainPrimary"
+            android:textSize="18sp" />
 
-    </FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cityListRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:clipToPadding="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
 
-    <TextView
-        android:id="@+id/findMyCurrentCityTv"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="5dp"
-        android:background="?selectableItemBackground"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="@string/select_city_current_location"
-        android:textAppearance="?textAppearanceRegularText"
-        android:textColor="@color/onMainPrimary"
-        android:textSize="16sp"
-        app:drawableStartCompat="@drawable/ic_gps_24dp" />
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="@string/select_city_list_head"
-        android:textAppearance="?textAppearanceBoldText"
-        android:textColor="@color/onMainPrimary"
-        android:textSize="18sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cityListRv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:clipToPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp" />
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
