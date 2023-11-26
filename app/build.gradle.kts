@@ -44,6 +44,9 @@ dependencies {
     val splashscreenVersion = "1.0.1"
     val hiltVersion = "2.44"
     val navVersion = "2.7.5"
+    val gsonVersion = "2.10.1"
+    val retrofitVersion = "2.9.0"
+    val coroutineVersion = "1.7.3"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -63,4 +66,12 @@ dependencies {
     // Navigation component
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
+    // Network and Retrofit
+    implementation("com.google.code.gson:gson:$gsonVersion")
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+
+    //coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
 }
