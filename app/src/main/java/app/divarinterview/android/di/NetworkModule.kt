@@ -1,5 +1,7 @@
 package app.divarinterview.android.di
 
+import app.divarinterview.android.common.BASE_URL
+import app.divarinterview.android.common.container.UserContainer
 import app.divarinterview.android.service.remote.ApiService
 import dagger.Module
 import dagger.Provides
@@ -9,8 +11,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
-const val BASE_URL = "https://android-interview.divar.dev/api/v1/"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -27,7 +27,7 @@ class NetworkModule {
                 newRequestBuilder.addHeader("Content-Type", "application/json")
                 newRequestBuilder.addHeader(
                     "x-access-token",
-                    "Basic YXBpa2V5OjY5Y1dxVW8wNGhpNFdMdUdBT2IzMmRXZXQjsllsVzBtSkNiwU9yLUxEamNDUXFMSzJnR29mS3plZg=="
+                    "Basic ${UserContainer.token}"
                 )
 
                 return@addInterceptor it.proceed(newRequestBuilder.build())
