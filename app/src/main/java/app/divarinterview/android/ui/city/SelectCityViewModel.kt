@@ -22,6 +22,8 @@ class SelectCityViewModel @Inject constructor(
     private var _cityListState = MutableStateFlow<List<City>>(emptyList())
     val cityListState: StateFlow<List<City>> = _cityListState
 
+    private var cities: List<City> = emptyList()
+
     init {
         getCitiesList()
     }
@@ -36,6 +38,7 @@ class SelectCityViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         it.data?.cities?.let { list ->
+                            cities = list
                             _cityListState.value = list
                             windowLoadingState.value = false
                         } ?: kotlin.run {
@@ -69,5 +72,14 @@ class SelectCityViewModel @Inject constructor(
         }
     }
 
+    fun searchInList(searchQuery: String) {
+        val filteredCities = cities.filter {
+            it.name.contains(searchQuery)
+        }.sortedBy { city ->
+            val indexOfQuery = city.name.indexOf(searchQuery)
+            if (indexOfQuery >= 0) indexOfQuery else Int.MAX_VALUE
+        }
+        _cityListState.value = filteredCities
+    }
 
 }

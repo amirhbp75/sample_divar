@@ -1,6 +1,8 @@
 package app.divarinterview.android.ui.city
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +37,7 @@ class SelectCityFragment @Inject constructor(
         showProgressBar()
         initAdapter()
         fetchData()
+        searchCityEditTextListener()
     }
 
     private fun showProgressBar() {
@@ -63,9 +66,23 @@ class SelectCityFragment @Inject constructor(
     private fun fetchData() {
         lifecycleScope.launch {
             viewModel.cityListState.collect {
-                cityListAdapter.submitList(it)
+                cityListAdapter.submitList(it) {
+                    binding.cityListRv.scrollToPosition(0)
+                }
             }
         }
+    }
+
+    private fun searchCityEditTextListener() {
+        binding.searchCityNameEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {
+                viewModel.searchInList(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
 }
