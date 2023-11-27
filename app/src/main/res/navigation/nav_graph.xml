@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/welcomeFragment">
+    app:startDestination="@id/postListFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
@@ -22,5 +22,26 @@
         android:id="@+id/selectCityFragment"
         android:name="app.divarinterview.android.ui.city.SelectCityFragment"
         android:label="SelectCityFragment"
-        tools:layout="@layout/fragment_select_city" />
+        tools:layout="@layout/fragment_select_city">
+        <action
+            android:id="@+id/action_selectCityFragment_to_postListFragment"
+            app:destination="@id/postListFragment"
+            app:enterAnim="@anim/slide_in_left_add_fragment"
+            app:exitAnim="@anim/slide_out_right_add_fragment"
+            app:popEnterAnim="@anim/slide_in_right_pop_fragment"
+            app:popExitAnim="@anim/slide_out_left_pop_fragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/postListFragment"
+        android:name="app.divarinterview.android.ui.post.list.PostListFragment"
+        android:label="PostListFragment"
+        tools:layout="@layout/fragment_post_list">
+        <action
+            android:id="@+id/action_postListFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/postListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

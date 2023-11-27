@@ -19,4 +19,8 @@ class CityRemoteDataSource @Inject constructor(
             addProperty("long", long)
         })
     }
+
+    override suspend fun selectCity(id: Int, name: String) {
+        TODO("Not yet implemented")
+    }
 }

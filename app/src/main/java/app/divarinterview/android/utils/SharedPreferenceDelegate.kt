@@ -28,6 +28,7 @@ class SharedPreferenceDelegate<T>(
         return when (defaultValue) {
             null -> getString(key, null) as T
             is String -> getString(key, defaultValue) as T
+            is Int -> getInt(key, defaultValue) as T
             else -> throw IllegalArgumentException("Unsupported type")
         }
     }
@@ -36,6 +37,7 @@ class SharedPreferenceDelegate<T>(
         when (value) {
             null -> edit().putString(key, null).apply()
             is String -> edit().putString(key, value).apply()
+            is Int -> edit().putInt(key, value).apply()
             else -> throw IllegalArgumentException("Unsupported type")
         }
     }

@@ -10,5 +10,7 @@ interface CityRepository {
     suspend fun getGroupList(): Flow<Resource<Cities>>
 
     suspend fun findUserCurrentCity(lat: Double, long: Double): Flow<Resource<City>>
+
+    suspend fun selectCity(id: Int, name: String)
 }
 

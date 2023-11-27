@@ -14,9 +14,9 @@ import javax.inject.Inject
 class CityListAdapter @Inject constructor() :
     ListAdapter<City, CityListAdapter.ViewHolder>(MyDiffUtilCallback()) {
 
-    private var onItemClickListener: ((Int) -> Unit)? = null
+    private var onItemClickListener: ((City) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Int) -> Unit) {
+    fun setOnItemClickListener(listener: (City) -> Unit) {
         onItemClickListener = listener
     }
 
@@ -32,7 +32,7 @@ class CityListAdapter @Inject constructor() :
         holder.itemView.apply {
             setOnClickListener {
                 onItemClickListener?.let { click ->
-                    click(currentItem.id)
+                    click(currentItem)
                 }
             }
         }

@@ -127,5 +127,9 @@ class SelectCityViewModel @Inject constructor(
         _cityListState.value = filteredCities
     }
 
-
+    fun selectCity(city: City) {
+        viewModelScope.launch {
+            cityRepository.selectCity(city.id, city.name)
+        }
+    }
 }

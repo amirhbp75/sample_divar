@@ -23,5 +23,6 @@ class App : Application() {
             UserContainer.updateToken(USER_TOKEN)
         }
 
+        UserContainer.updateCity(preferences.cityId, preferences.cityName)
     }
 }

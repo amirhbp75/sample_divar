@@ -6,9 +6,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.divarinterview.android.R
@@ -69,7 +69,10 @@ class SelectCityFragment @Inject constructor(
         }
 
         cityListAdapter.setOnItemClickListener {
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            viewModel.selectCity(it)
+            findNavController().navigate(
+                R.id.action_selectCityFragment_to_postListFragment
+            )
         }
     }
 
@@ -102,7 +105,10 @@ class SelectCityFragment @Inject constructor(
 
         binding.findMyCurrentCityTv.setOnClickListener {
             if (viewModel.userCurrentCity.value != null) {
-                showToast(viewModel.userCurrentCity.value!!.id.toString())
+                viewModel.selectCity(viewModel.userCurrentCity.value!!)
+                findNavController().navigate(
+                    R.id.action_selectCityFragment_to_postListFragment
+                )
             } else {
                 if (!checkLocationPermission(requireContext()))
                     requestForLocationPermission(
