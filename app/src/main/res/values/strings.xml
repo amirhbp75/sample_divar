@@ -7,8 +7,9 @@
     <string name="select_city_input_hint">شهر خود را انتخاب نمایید</string>
     <string name="select_city_current_location">انتخاب شهر فعلی من</string>
     <string name="select_city_current_location_loading">در حال دریافت شهر شما…</string>
+    <string name="select_city_current_location_result">شهر شما: %1$s</string>
     <string name="select_city_list_head">لیست شهرها</string>
-
+    <string name="select_city_error_404_not_found">خارج از محدوده!</string>
 
     <string name="error_fetch_data">خطا در دریافت اطلاعات!</string>
     <string name="error_connection">خطا در ارتباط با سرور!</string>

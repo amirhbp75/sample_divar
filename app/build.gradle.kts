@@ -48,6 +48,7 @@ dependencies {
     val retrofitVersion = "2.9.0"
     val coroutineVersion = "1.7.3"
     val eventbusVersion = "3.3.1"
+    val locationVersion = "21.0.1"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -78,4 +79,8 @@ dependencies {
 
     // Eventbus
     implementation("org.greenrobot:eventbus:$eventbusVersion")
+
+    // Location Services
+    implementation("com.google.android.gms:play-services-location:$locationVersion")
+
 }

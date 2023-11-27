@@ -33,5 +33,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         splashScreen.setKeepOnScreenCondition { keep }
         Handler(Looper.getMainLooper()).postDelayed({ keep = false }, delay)
+
     }
 }

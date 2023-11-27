@@ -11,8 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
 import app.divarinterview.android.databinding.FragmentSelectCityBinding
+import app.divarinterview.android.utils.checkGpsEnable
+import app.divarinterview.android.utils.checkLocationPermission
+import app.divarinterview.android.utils.requestForEnableGps
+import app.divarinterview.android.utils.requestForLocationPermission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,6 +28,10 @@ class SelectCityFragment @Inject constructor(
 ) : BaseFragment<FragmentSelectCityBinding>() {
 
     private val viewModel: SelectCityViewModel by viewModels()
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 765
+    }
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -38,6 +47,7 @@ class SelectCityFragment @Inject constructor(
         initAdapter()
         fetchData()
         searchCityEditTextListener()
+        showUserCurrentCity()
     }
 
     private fun showProgressBar() {
@@ -85,4 +95,46 @@ class SelectCityFragment @Inject constructor(
         })
     }
 
+    private fun showUserCurrentCity() {
+        if (checkLocationPermission(requireContext()) && checkGpsEnable(requireContext())) {
+            viewModel.getUserCity()
+        }
+
+        binding.findMyCurrentCityTv.setOnClickListener {
+            if (viewModel.userCurrentCity.value != null) {
+                showToast(viewModel.userCurrentCity.value!!.id.toString())
+            } else {
+                if (!checkLocationPermission(requireContext()))
+                    requestForLocationPermission(
+                        requireActivity(),
+                        LOCATION_PERMISSION_REQUEST_CODE
+                    )
+                else if (!checkGpsEnable(requireContext()))
+                    requestForEnableGps(requireContext())
+                else {
+                    viewModel.getUserCity()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.userCurrentCity.collect {
+                it?.let { city ->
+                    if (city.id == -1) {
+                        binding.findMyCurrentCityTv.isEnabled = false
+                        binding.findMyCurrentCityTv.text =
+                            getString(R.string.select_city_current_location_loading)
+                    } else {
+                        binding.findMyCurrentCityTv.isEnabled = true
+                        binding.findMyCurrentCityTv.text =
+                            getString(R.string.select_city_current_location_result, city.name)
+                    }
+                } ?: kotlin.run {
+                    binding.findMyCurrentCityTv.isEnabled = true
+                    binding.findMyCurrentCityTv.text =
+                        getString(R.string.select_city_current_location)
+                }
+            }
+        }
+    }
 }
