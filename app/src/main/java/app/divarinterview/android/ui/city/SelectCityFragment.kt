@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
+import app.divarinterview.android.common.container.UserContainer
 import app.divarinterview.android.databinding.FragmentSelectCityBinding
 import app.divarinterview.android.utils.checkGpsEnable
 import app.divarinterview.android.utils.checkLocationPermission
@@ -69,10 +70,13 @@ class SelectCityFragment @Inject constructor(
         }
 
         cityListAdapter.setOnItemClickListener {
-            viewModel.selectCity(it)
             findNavController().navigate(
-                R.id.action_selectCityFragment_to_postListFragment
+                if (UserContainer.cityId != -1)
+                    R.id.action_selectCityFragment_to_postListFragment_change_city
+                else
+                    R.id.action_selectCityFragment_to_postListFragment
             )
+            viewModel.selectCity(it)
         }
     }
 
@@ -105,10 +109,13 @@ class SelectCityFragment @Inject constructor(
 
         binding.findMyCurrentCityTv.setOnClickListener {
             if (viewModel.userCurrentCity.value != null) {
-                viewModel.selectCity(viewModel.userCurrentCity.value!!)
                 findNavController().navigate(
-                    R.id.action_selectCityFragment_to_postListFragment
+                    if (UserContainer.cityId != -1)
+                        R.id.action_selectCityFragment_to_postListFragment_change_city
+                    else
+                        R.id.action_selectCityFragment_to_postListFragment
                 )
+                viewModel.selectCity(viewModel.userCurrentCity.value!!)
             } else {
                 if (!checkLocationPermission(requireContext()))
                     requestForLocationPermission(

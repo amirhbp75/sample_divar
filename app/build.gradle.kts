@@ -53,6 +53,7 @@ dependencies {
     val frescoVersion = "3.1.3"
     val epoxyVersion = "5.1.3"
     val recyclerviewVersion = "1.3.2"
+    val swiperefreshVersion = "1.1.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -64,6 +65,7 @@ dependencies {
 
     // Recyclerview
     implementation("androidx.recyclerview:recyclerview:$recyclerviewVersion")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshVersion")
 
     // Splash Screen
     implementation("androidx.core:core-splashscreen:$splashscreenVersion")

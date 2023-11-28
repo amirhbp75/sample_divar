@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -30,10 +31,11 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        backPressHandling()
         showProgressBar()
         selectedCity()
         initList()
-
+        onSwipeRefresh()
     }
 
     override fun onStart() {
@@ -45,10 +47,21 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
         }
     }
 
+    private fun backPressHandling() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+
+            })
+    }
+
     private fun showProgressBar() {
         lifecycleScope.launch {
             viewModel.windowLoadingState.collect {
-                setWindowProgressIndicator(it)
+                setFrameProgressIndicator(binding.contentFrame, it)
             }
         }
     }
@@ -56,10 +69,15 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
     private fun selectedCity() {
         binding.selectedCityTv.text =
             getString(R.string.select_city_current_location_result, UserContainer.cityName)
+
+        binding.changeCityTv.setOnClickListener {
+            findNavController().navigate(R.id.action_postListFragment_to_selectCityFragment)
+        }
     }
 
     private fun initList() {
         val epoxyController = PostListEpoxyController()
+        binding.postListRv.itemAnimator = null;
         binding.postListRv.setController(epoxyController)
 
         lifecycleScope.launch {
@@ -67,6 +85,13 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
                 if (it != null)
                     epoxyController.setData(it.widgetList)
             }
+        }
+    }
+
+    private fun onSwipeRefresh() {
+        binding.postListSwipeRefresh.setOnRefreshListener {
+            viewModel.getPostList()
+            binding.postListSwipeRefresh.isRefreshing = false
         }
     }
 }

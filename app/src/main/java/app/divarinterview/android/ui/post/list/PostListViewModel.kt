@@ -25,7 +25,7 @@ class PostListViewModel @Inject constructor(
         getPostList()
     }
 
-    private fun getPostList() {
+    fun getPostList() {
         viewModelScope.launch {
             postRepository.getPostList(UserContainer.cityId, 0, 0).collect {
                 when (it) {

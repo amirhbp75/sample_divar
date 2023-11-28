@@ -105,6 +105,20 @@ interface BaseView {
         }
     }
 
+    fun setFrameProgressIndicator(root: ViewGroup, mustShow: Boolean) {
+        viewContext?.let { context ->
+            var loadingView = root.findViewById<View>(R.id.loadingView)
+            if (loadingView == null && mustShow) {
+                loadingView =
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.view_window_loading, root, false)
+                root.addView(loadingView)
+            }
+
+            loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun errorEvent(exception: BaseException) {
         viewContext?.let { context ->
