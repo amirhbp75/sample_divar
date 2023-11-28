@@ -49,6 +49,7 @@ dependencies {
     val coroutineVersion = "1.7.3"
     val eventbusVersion = "3.3.1"
     val locationVersion = "21.0.1"
+    val frescoVersion = "3.1.3"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -83,4 +84,7 @@ dependencies {
     // Location Services
     implementation("com.google.android.gms:play-services-location:$locationVersion")
 
+    // Fresco and Webp file support
+    implementation("com.facebook.fresco:fresco:$frescoVersion")
+    implementation("com.facebook.fresco:webpsupport:$frescoVersion")
 }
