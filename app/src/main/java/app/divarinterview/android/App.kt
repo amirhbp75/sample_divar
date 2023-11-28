@@ -4,6 +4,7 @@ import android.app.Application
 import app.divarinterview.android.common.USER_TOKEN
 import app.divarinterview.android.common.container.PreferencesContainer
 import app.divarinterview.android.common.container.UserContainer
+import com.facebook.drawee.backends.pipeline.Fresco
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -15,6 +16,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        Fresco.initialize(this)
 
         if (preferences.token != null)
             UserContainer.updateToken(preferences.token)

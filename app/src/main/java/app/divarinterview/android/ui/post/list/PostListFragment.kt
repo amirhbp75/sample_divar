@@ -11,6 +11,7 @@ import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
 import app.divarinterview.android.common.container.UserContainer
 import app.divarinterview.android.databinding.FragmentPostListBinding
+import app.divarinterview.android.ui.post.list.sdui.PostListEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -30,12 +31,8 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         showProgressBar()
-
-        lifecycleScope.launch {
-            viewModel.postListState.collect {
-
-            }
-        }
+        selectedCity()
+        initList()
 
     }
 
@@ -56,5 +53,20 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
         }
     }
 
+    private fun selectedCity() {
+        binding.selectedCityTv.text =
+            getString(R.string.select_city_current_location_result, UserContainer.cityName)
+    }
 
+    private fun initList() {
+        val epoxyController = PostListEpoxyController()
+        binding.postListRv.setController(epoxyController)
+
+        lifecycleScope.launch {
+            viewModel.postListState.collect {
+                if (it != null)
+                    epoxyController.setData(it.widgetList)
+            }
+        }
+    }
 }

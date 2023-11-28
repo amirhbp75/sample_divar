@@ -35,7 +35,9 @@ class PostListViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         windowLoadingState.value = false
-                        Log.i("TAGGGG", "getPostList: ")
+                        it.data?.let { data ->
+                            _postListState.value = data
+                        }
                     }
 
                     is Resource.Error -> {

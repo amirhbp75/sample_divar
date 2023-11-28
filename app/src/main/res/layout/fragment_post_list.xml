@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingStart="16dp"
@@ -30,9 +31,9 @@
                 android:drawablePadding="6dp"
                 android:gravity="center_vertical"
                 android:text="@string/select_city_current_location_result"
-                android:textAppearance="?textAppearanceRegularText"
+                android:textAppearance="?textAppearanceBoldText"
                 android:textColor="@color/onMainPrimary"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_location_24dp" />
 
             <TextView
@@ -46,16 +47,20 @@
                 android:text="@string/post_list_change_selected_city"
                 android:textAppearance="?textAppearanceRegularText"
                 android:textColor="@color/primary"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
         </FrameLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cityListRv"
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/postListRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            app:itemSpacing="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/sdui_post_list_card" />
 
     </LinearLayout>
 

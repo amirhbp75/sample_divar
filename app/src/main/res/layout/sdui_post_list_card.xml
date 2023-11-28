@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_article_card_corner_12dp"
+    android:orientation="horizontal"
     android:padding="10dp">
 
     <app.divarinterview.android.view.DivarCustomImageView
@@ -12,66 +13,65 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:roundedCornerRadius="8dp"
         tools:background="@drawable/bg_empty_state_thumbnail" />
 
-    <TextView
-        android:id="@+id/postItemTitleTv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:textAppearance="?textAppearanceBoldText"
-        android:textColor="@color/onMainPrimary"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/postItemThumbnailIv"
-        app:layout_constraintTop_toTopOf="@+id/postItemThumbnailIv"
-        tools:text="عنوان آگهی نمایش داده شده" />
+        android:layout_marginBottom="5dp">
 
-    <TextView
-        android:id="@+id/postItemSubtitleTv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="?textAppearanceRegularText"
-        android:textColor="@color/postDetail"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/postItemTitleTv"
-        app:layout_constraintTop_toBottomOf="@+id/postItemTitleTv"
-        tools:text="توضیحات تکمیلی آگهی" />
+        <TextView
+            android:id="@+id/postItemTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?textAppearanceBoldText"
+            android:textColor="@color/onMainPrimary"
+            android:textSize="16sp"
+            tools:text="عنوان آگهی نمایش داده شده" />
 
-    <TextView
-        android:id="@+id/postItemPriceTv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="?textAppearanceRegularText"
-        android:textColor="@color/postDetail"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/postItemTitleTv"
-        app:layout_constraintTop_toBottomOf="@+id/postItemSubtitleTv"
-        tools:text="مبلغ آگهی" />
+        <TextView
+            android:id="@+id/postItemPriceTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/postItemTitleTv"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="?textAppearanceRegularText"
+            android:textColor="@color/postDetail"
+            android:textSize="15sp"
+            tools:text="مبلغ آگهی" />
 
-    <TextView
-        android:id="@+id/postItemDistrictTv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:textAppearance="?textAppearanceRegularText"
-        android:textColor="@color/postDetail"
-        android:textSize="15sp"
-        app:drawableStartCompat="@drawable/ic_location_grey_14dp"
-        app:layout_constraintBottom_toBottomOf="@+id/postItemThumbnailIv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/postItemTitleTv"
-        tools:text="موقعیت مکانی آگهی" />
+        <TextView
+            android:id="@+id/postItemDistrictTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textAppearance="?textAppearanceRegularText"
+            android:textColor="@color/postDetail"
+            android:textSize="15sp"
+            app:drawableStartCompat="@drawable/ic_location_grey_14dp"
+            tools:text="موقعیت مکانی آگهی" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

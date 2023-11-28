@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
     kotlin("kapt")
 }
 
@@ -50,6 +51,8 @@ dependencies {
     val eventbusVersion = "3.3.1"
     val locationVersion = "21.0.1"
     val frescoVersion = "3.1.3"
+    val epoxyVersion = "5.1.3"
+    val recyclerviewVersion = "1.3.2"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -58,6 +61,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Recyclerview
+    implementation("androidx.recyclerview:recyclerview:$recyclerviewVersion")
 
     // Splash Screen
     implementation("androidx.core:core-splashscreen:$splashscreenVersion")
@@ -86,5 +92,9 @@ dependencies {
 
     // Fresco and Webp file support
     implementation("com.facebook.fresco:fresco:$frescoVersion")
-    implementation("com.facebook.fresco:webpsupport:$frescoVersion")
+
+    // Epoxy
+    implementation("com.airbnb.android:epoxy:$epoxyVersion")
+    ksp("com.airbnb.android:epoxy-processor:$epoxyVersion")
+
 }
