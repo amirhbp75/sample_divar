@@ -4,15 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
 import app.divarinterview.android.common.container.UserContainer
 import app.divarinterview.android.databinding.FragmentPostListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PostListFragment : BaseFragment<FragmentPostListBinding>() {
+
+    private val viewModel: PostListViewModel by viewModels()
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -23,6 +28,15 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        showProgressBar()
+
+        lifecycleScope.launch {
+            viewModel.postListState.collect {
+
+            }
+        }
+
     }
 
     override fun onStart() {
@@ -33,5 +47,14 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
             )
         }
     }
+
+    private fun showProgressBar() {
+        lifecycleScope.launch {
+            viewModel.windowLoadingState.collect {
+                setWindowProgressIndicator(it)
+            }
+        }
+    }
+
 
 }
