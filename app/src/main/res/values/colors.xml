@@ -5,7 +5,12 @@
     <color name="onBoxSecondary">#4E4E4E</color>
     <color name="border">#D5D5D5</color>
     <color name="onMainPrimary">#0E0E0E</color>
+    <color name="onMainSecondary">#242424</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="onPrimaryButton">#FFFFFF</color>
     <color name="ripple">#FCEEED</color>
+    <color name="postDetail">#393939</color>
+    <color name="postDetailIcon">#A6A6A6</color>
+    <color name="thumbnailEmptyStateBg">#D9D9D9</color>
+    <color name="thumbnailEmptyStateIcon">#999999</color>
 </resources>

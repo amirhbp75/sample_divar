@@ -11,6 +11,8 @@
     <string name="select_city_list_head">لیست شهرها</string>
     <string name="select_city_error_404_not_found">خارج از محدوده!</string>
 
+    <string name="post_list_change_selected_city">تغییر شهر</string>
+
     <string name="error_fetch_data">خطا در دریافت اطلاعات!</string>
     <string name="error_connection">خطا در ارتباط با سرور!</string>
     <string name="error_unknown">خطای نامشخص</string>
