@@ -40,6 +40,12 @@ class PostListEpoxyController : TypedEpoxyController<List<PostItemSDUIWidget>>()
                         }
                     }
                 }
+
+                PostItemWidgetType.LOADING_ROW -> {
+                    postListLoadingRow {
+                        id("loading")
+                    }
+                }
             }
         }
     }

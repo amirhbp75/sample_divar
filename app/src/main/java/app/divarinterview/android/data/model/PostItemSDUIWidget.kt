@@ -11,5 +11,6 @@ data class PostItemSDUIWidget(
 enum class PostItemWidgetType {
     TITLE_ROW,
     SUBTITLE_ROW,
-    POST_ROW
+    POST_ROW,
+    LOADING_ROW
 }

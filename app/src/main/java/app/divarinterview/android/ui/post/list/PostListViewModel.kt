@@ -22,15 +22,16 @@ class PostListViewModel @Inject constructor(
     val postListState: StateFlow<PostItemSDUIResponse?> = _postListState
 
     init {
-        getPostList()
+        getPostList(0, 0)
     }
 
-    fun getPostList() {
+    fun getPostList(page: Int, lastDate: Long) {
         viewModelScope.launch {
-            postRepository.getPostList(UserContainer.cityId, 0, 0).collect {
+            postRepository.getPostList(UserContainer.cityId, page, lastDate).collect {
                 when (it) {
                     is Resource.Loading -> {
-                        windowLoadingState.value = true
+                        if (page == 0)
+                            windowLoadingState.value = true
                     }
 
                     is Resource.Success -> {

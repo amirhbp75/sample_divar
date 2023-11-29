@@ -57,7 +57,9 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/postListSwipeRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
 
                 <com.airbnb.epoxy.EpoxyRecyclerView
                     android:id="@+id/postListRv"
@@ -65,8 +67,6 @@
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:orientation="vertical"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
                     app:itemSpacing="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/sdui_post_list_card" />
