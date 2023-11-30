@@ -2,12 +2,14 @@ package app.divarinterview.android.service.remote
 
 import app.divarinterview.android.data.model.Cities
 import app.divarinterview.android.data.model.City
+import app.divarinterview.android.data.model.PostDetailsSDUIResponse
 import app.divarinterview.android.data.model.PostItemSDUIResponse
 import com.google.gson.JsonObject
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -26,5 +28,8 @@ interface ApiService {
         @Body jsonObject: JsonObject
     ): Response<PostItemSDUIResponse>
 
-
+    @GET("post/view/{postToken}")
+    suspend fun getPostDetails(
+        @Path("postToken") postToken: String
+    ): Response<PostDetailsSDUIResponse>
 }

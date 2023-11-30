@@ -16,6 +16,8 @@ class PostRepositoryImpl @Inject constructor(
         last: Long
     ) = remoteDataSource.getPostList(cityId, page, last)
 
+    override suspend fun getPostDetail(token: String) = remoteDataSource.getPostDetail(token)
+
     override suspend fun insertAll(posts: List<PostItemEntity>) = localDataSource.insertAll(posts)
 
     override suspend fun deleteAll() = localDataSource.deleteAll()

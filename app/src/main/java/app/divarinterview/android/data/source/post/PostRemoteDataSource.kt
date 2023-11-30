@@ -1,9 +1,12 @@
 package app.divarinterview.android.data.source.post
 
+import app.divarinterview.android.data.model.PostDetailsSDUIResponse
 import app.divarinterview.android.data.model.local.PostItemEntity
 import app.divarinterview.android.service.remote.ApiService
 import app.divarinterview.android.service.remote.callApi
+import app.divarinterview.android.utils.Resource
 import com.google.gson.JsonObject
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PostRemoteDataSource @Inject constructor(
@@ -19,6 +22,10 @@ class PostRemoteDataSource @Inject constructor(
             addProperty("page", page)
             addProperty("last_post_date", last)
         })
+    }
+
+    override suspend fun getPostDetail(token: String) = callApi {
+        apiService.getPostDetails(token)
     }
 
     override suspend fun insertAll(posts: List<PostItemEntity>) {

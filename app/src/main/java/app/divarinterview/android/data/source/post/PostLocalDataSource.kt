@@ -2,6 +2,7 @@ package app.divarinterview.android.data.source.post
 
 import androidx.room.withTransaction
 import app.divarinterview.android.data.database.DivarDatabase
+import app.divarinterview.android.data.model.PostDetailsSDUIResponse
 import app.divarinterview.android.data.model.PostItemSDUIResponse
 import app.divarinterview.android.data.model.local.PostItemEntity
 import app.divarinterview.android.utils.Resource
@@ -17,6 +18,10 @@ class PostLocalDataSource @Inject constructor(
         page: Int,
         last: Long
     ): Flow<Resource<PostItemSDUIResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPostDetail(token: String): Flow<Resource<PostDetailsSDUIResponse>> {
         TODO("Not yet implemented")
     }
 

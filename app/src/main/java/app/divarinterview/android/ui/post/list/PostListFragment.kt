@@ -42,7 +42,11 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         epoxyController = PostListEpoxyController(onItemClicked = {
-            showToast(it)
+            findNavController().navigate(
+                R.id.action_postListFragment_to_postDetailFragment,
+                Bundle().apply {
+                    putString("token", it)
+                })
         })
 
         backPressHandling()

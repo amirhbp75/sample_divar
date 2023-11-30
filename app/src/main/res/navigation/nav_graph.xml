@@ -65,5 +65,17 @@
             app:exitAnim="@anim/slide_out_right_add_fragment"
             app:popEnterAnim="@anim/slide_in_right_pop_fragment"
             app:popExitAnim="@anim/slide_out_left_pop_fragment" />
+        <action
+            android:id="@+id/action_postListFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment"
+            app:enterAnim="@anim/slide_in_left_add_fragment"
+            app:exitAnim="@anim/slide_out_right_add_fragment"
+            app:popEnterAnim="@anim/slide_in_right_pop_fragment"
+            app:popExitAnim="@anim/slide_out_left_pop_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="app.divarinterview.android.ui.post.details.PostDetailsFragment"
+        android:label="PostDetailFragment"
+        tools:layout="@layout/fragment_post_list" />
 </navigation>
