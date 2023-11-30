@@ -40,7 +40,7 @@ class PostListViewModel @Inject constructor(
     val loadingEvent = _loadingEvent.asSharedFlow()
 
     private var pageContent: MutableList<PostItemEntity> = mutableListOf()
-    private var offlineMode: Boolean = true
+    var offlineMode: Boolean = true
     var fetchComplete: Boolean = false
     val loadingItem = PostItemSDUIWidget(PostItemWidgetType.LOADING_ROW, PostItemData())
 
@@ -65,7 +65,7 @@ class PostListViewModel @Inject constructor(
                     postList.add(0, loadingItem)
                 }
 
-                _postListState.value = PostItemSDUIResponse(postList, page.toLong() + 1)
+                _postListState.value = PostItemSDUIResponse(postList, page.toLong())
             }
         }
     }

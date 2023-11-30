@@ -6,6 +6,7 @@ import app.divarinterview.android.data.model.PostItemData
 import app.divarinterview.android.databinding.SduiPostListCardBinding
 import app.divarinterview.android.di.DependencyInjector
 import app.divarinterview.android.utils.ViewBindingKotlinModel
+import app.divarinterview.android.utils.clickButtonAnimation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 
@@ -17,6 +18,9 @@ abstract class PostListPostRowEpoxyModel :
 
     @EpoxyAttribute
     lateinit var data: PostItemData
+
+    @EpoxyAttribute
+    lateinit var onClick: (String) -> Unit
 
     override fun SduiPostListCardBinding.bind() {
         data.thumbnail?.let {
@@ -30,6 +34,9 @@ abstract class PostListPostRowEpoxyModel :
         if (data.district == "")
             postItemDistrictTv.visibility = View.GONE
         else postItemDistrictTv.text = data.district
+
+        root.clickButtonAnimation()
+        root.setOnClickListener { data.token?.let { token -> onClick(token) } }
     }
 
 }

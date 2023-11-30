@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
 import app.divarinterview.android.databinding.FragmentWelcomeBinding
+import app.divarinterview.android.utils.clickButtonAnimation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +27,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.loginToAppBtn.clickButtonAnimation()
         binding.loginToAppBtn.setOnClickListener {
             viewModel.updateUserToken()
             findNavController().navigate(

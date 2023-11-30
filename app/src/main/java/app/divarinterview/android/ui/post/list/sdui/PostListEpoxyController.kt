@@ -5,7 +5,9 @@ import app.divarinterview.android.data.model.PostItemWidgetType
 import com.airbnb.epoxy.TypedEpoxyController
 
 
-class PostListEpoxyController : TypedEpoxyController<List<PostItemSDUIWidget>>() {
+class PostListEpoxyController(
+    private val onItemClicked: (String) -> Unit
+) : TypedEpoxyController<List<PostItemSDUIWidget>>() {
 
     override fun buildModels(data: List<PostItemSDUIWidget>) {
         if (data.isEmpty()) {
@@ -34,10 +36,11 @@ class PostListEpoxyController : TypedEpoxyController<List<PostItemSDUIWidget>>()
 
                 PostItemWidgetType.POST_ROW -> {
                     widgetData.data?.let {
-                        postListPostRow {
-                            id(it.token)
-                            data(it)
-                        }
+                        PostListPostRowEpoxyModel_()
+                            .id(it.token)
+                            .data(it)
+                            .onClick(onItemClicked)
+                            .addTo(this)
                     }
                 }
 

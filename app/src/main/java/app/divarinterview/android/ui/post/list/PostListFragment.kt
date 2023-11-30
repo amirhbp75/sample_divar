@@ -24,7 +24,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
 
     private val viewModel: PostListViewModel by viewModels()
 
-    val epoxyController = PostListEpoxyController()
+    lateinit var epoxyController: PostListEpoxyController
     var postList: MutableList<PostItemSDUIWidget> = mutableListOf()
 
     private var isLoadingNewPage: Boolean = false
@@ -40,6 +40,10 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        epoxyController = PostListEpoxyController(onItemClicked = {
+            showToast(it)
+        })
 
         backPressHandling()
         showProgressBar()
@@ -114,7 +118,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
                 isLoadingNewPage = false
 
                 if (it != null) {
-                    if (lastPostDate == 0L) {
+                    if ((!viewModel.offlineMode && lastPostDate == 0L) || it.lastPostDate == 0L) {
                         postList = it.widgetList.toMutableList()
                         page = 0
                     } else
@@ -122,7 +126,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
 
                     epoxyController.setData(postList)
                     page++
-                    lastPostDate = it.lastPostDate
+                    if (!viewModel.offlineMode) lastPostDate = it.lastPostDate
                 }
             }
         }
