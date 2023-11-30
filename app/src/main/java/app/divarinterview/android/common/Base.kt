@@ -15,6 +15,7 @@ import androidx.viewbinding.ViewBinding
 import app.divarinterview.android.R
 import app.divarinterview.android.utils.gotoFragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -68,6 +69,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseView {
     protected val binding: VB
         get() = _binding!!
 
+    var dataFlowJob: Job? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -80,6 +83,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment(), BaseView {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        dataFlowJob?.cancel()
     }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB

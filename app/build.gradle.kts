@@ -54,6 +54,7 @@ dependencies {
     val epoxyVersion = "5.1.3"
     val recyclerviewVersion = "1.3.2"
     val swiperefreshVersion = "1.1.0"
+    val roomVersion = "2.6.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -98,5 +99,10 @@ dependencies {
     // Epoxy
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     ksp("com.airbnb.android:epoxy-processor:$epoxyVersion")
+
+    // Room
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
 
 }

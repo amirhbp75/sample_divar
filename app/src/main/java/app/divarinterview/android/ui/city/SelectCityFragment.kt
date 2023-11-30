@@ -81,7 +81,7 @@ class SelectCityFragment @Inject constructor(
     }
 
     private fun fetchData() {
-        lifecycleScope.launch {
+        dataFlowJob = lifecycleScope.launch {
             viewModel.cityListState.collect {
                 cityListAdapter.submitList(it) {
                     binding.cityListRv.scrollToPosition(0)
@@ -130,7 +130,7 @@ class SelectCityFragment @Inject constructor(
             }
         }
 
-        lifecycleScope.launch {
+        dataFlowJob = lifecycleScope.launch {
             viewModel.userCurrentCity.collect {
                 it?.let { city ->
                     if (city.id == -1) {

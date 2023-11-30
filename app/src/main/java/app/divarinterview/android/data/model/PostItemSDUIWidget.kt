@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class PostItemSDUIWidget(
     @SerializedName("widget_type")
     val widgetType: PostItemWidgetType,
-    val data: PostItemData?
+    val data: PostItemData
 )
 
 enum class PostItemWidgetType {

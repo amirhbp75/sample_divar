@@ -67,9 +67,9 @@ class SelectCityViewModel @Inject constructor(
 
                         EventBus.getDefault().post(
                             BaseExceptionMapper.httpExceptionMapper(
-                                it.errorCode,
-                                it.message,
-                                message
+                                errorCode = it.errorCode,
+                                localMessage = it.message,
+                                serverMessage = message
                             )
                         )
                     }

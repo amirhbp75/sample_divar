@@ -23,7 +23,7 @@ suspend fun <T> callApi(call: suspend () -> Response<T>) = flow {
     }
 }.catch { e ->
     if (e is IOException)
-        emit(Resource.Error(R.string.error_connection))
+        emit(Resource.Error(R.string.error_connection, 999))
     else
         emit(Resource.Error(R.string.error_fetch_data))
 

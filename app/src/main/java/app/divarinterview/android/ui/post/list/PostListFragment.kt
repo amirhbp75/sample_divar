@@ -14,7 +14,6 @@ import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
 import app.divarinterview.android.common.container.UserContainer
 import app.divarinterview.android.data.model.PostItemSDUIWidget
-import app.divarinterview.android.data.model.PostItemWidgetType
 import app.divarinterview.android.databinding.FragmentPostListBinding
 import app.divarinterview.android.ui.post.list.sdui.PostListEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,6 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
     private val viewModel: PostListViewModel by viewModels()
 
     val epoxyController = PostListEpoxyController()
-    val loadingItem = PostItemSDUIWidget(PostItemWidgetType.LOADING_ROW, null)
     var postList: MutableList<PostItemSDUIWidget> = mutableListOf()
 
     private var isLoadingNewPage: Boolean = false
@@ -67,14 +65,29 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
                 override fun handleOnBackPressed() {
                     requireActivity().finish()
                 }
-
             })
     }
 
     private fun showProgressBar() {
-        lifecycleScope.launch {
+        dataFlowJob = lifecycleScope.launch {
             viewModel.windowLoadingState.collect {
                 setFrameProgressIndicator(binding.contentFrame, it)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.loadingEvent.collect {
+                if (postList.isNotEmpty()) {
+                    val isFirstItemLoading = postList.first() == viewModel.loadingItem
+
+                    if (it && !isFirstItemLoading) {
+                        postList.add(0, viewModel.loadingItem)
+                    } else if (!it && isFirstItemLoading) {
+                        postList.removeFirst()
+                    }
+
+                    epoxyController.setData(postList)
+                }
             }
         }
     }
@@ -94,13 +107,20 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
 
         lifecycleScope.launch {
             viewModel.postListState.collect {
-                if (it != null) {
-                    postList.takeIf { list -> list.isNotEmpty() && list.last() == loadingItem }
-                        ?.removeLastOrNull()
+                postList.takeIf { list ->
+                    list.isNotEmpty() && list.last() == viewModel.loadingItem
+                }
+                    ?.removeLastOrNull()
+                isLoadingNewPage = false
 
-                    postList.addAll(it.widgetList.toMutableList())
+                if (it != null) {
+                    if (lastPostDate == 0L) {
+                        postList = it.widgetList.toMutableList()
+                        page = 0
+                    } else
+                        postList.addAll(it.widgetList.toMutableList())
+
                     epoxyController.setData(postList)
-                    isLoadingNewPage = false
                     page++
                     lastPostDate = it.lastPostDate
                 }
@@ -117,11 +137,11 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
                 val totalItemCount = layoutManager.itemCount
                 val remainToEnd = 5
 
-                if (!isLoadingNewPage && layoutManager.findLastCompletelyVisibleItemPosition() > totalItemCount - remainToEnd) {
+                if (!viewModel.fetchComplete && !isLoadingNewPage && layoutManager.findLastCompletelyVisibleItemPosition() > totalItemCount - remainToEnd) {
                     isLoadingNewPage = true
-                    viewModel.getPostList(page, lastPostDate)
-                    postList.add(loadingItem)
+                    postList.add(viewModel.loadingItem)
                     epoxyController.setData(postList)
+                    viewModel.fetchData(page, lastPostDate)
                 }
             }
         })
@@ -130,7 +150,8 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
     private fun onSwipeRefresh() {
         binding.postListSwipeRefresh.setOnRefreshListener {
             page = 0
-            viewModel.getPostList(0, 0)
+            lastPostDate = 0L
+            viewModel.getDataRemote(0, 0, true)
             binding.postListSwipeRefresh.isRefreshing = false
         }
     }
