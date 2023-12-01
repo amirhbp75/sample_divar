@@ -13,8 +13,19 @@
 
     <string name="post_list_change_selected_city">تغییر شهر</string>
 
+    <string name="post_details_error_404_not_found">آگهی مورد نظر یافت نشد!</string>
+
     <string name="error_fetch_data">خطا در دریافت اطلاعات!</string>
     <string name="error_connection">خطا در ارتباط با سرور!</string>
+    <string name="error_connection_description">لطفا اتصال اینترنت خود را بررسی کنید</string>
     <string name="error_unknown">خطای نامشخص</string>
     <string name="error_user_auth">شناسه\u200cی کاربر نامعتبر است.</string>
+
+    <string name="public_error_occur">خطایی رخ داده است!</string>
+    <string name="public_return">بازگشت</string>
+    <string name="public_try_again">تلاش مجدد</string>
+    <string name="public_load_data">در حال دریافت اطلاعات</string>
+    <string name="public_update_data">در حال بروزرسانی اطلاعات</string>
+    <string name="public_no_network_connection">اتصال اینترنت شما برقرار نیست!</string>
+
 </resources>

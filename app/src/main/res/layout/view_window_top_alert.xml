@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topAlertView"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/topAlert"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:translationZ="100dp">
+
+    <ProgressBar
+        android:id="@+id/topAlertLoadingPb"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:indeterminateTint="@color/onMainPrimary" />
+
+    <TextView
+        android:id="@+id/topAlertTextTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:textAppearance="?textAppearanceBoldText"
+        android:textColor="@color/onMainPrimary"
+        android:textSize="15sp"
+        tools:text="درحال دریافت اطلاعات" />
+
+</LinearLayout>

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -13,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import app.divarinterview.android.R
+import app.divarinterview.android.data.model.EmptyState
+import app.divarinterview.android.data.model.TopAlert
 import app.divarinterview.android.utils.gotoFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Job
@@ -123,6 +127,48 @@ interface BaseView {
         }
     }
 
+    fun setTopAlert(mustShow: Boolean, loading: Boolean, text: String) {
+        rootView?.let {
+            viewContext?.let { context ->
+                var topAlertView = it.findViewById<View>(R.id.topAlertView)
+                if (topAlertView == null && mustShow) {
+                    topAlertView =
+                        LayoutInflater.from(context)
+                            .inflate(R.layout.view_window_top_alert, it, false)
+                    it.addView(topAlertView)
+                }
+
+                topAlertView?.let { alert ->
+                    if (mustShow) {
+                        alert.visibility = View.VISIBLE
+                        val topAlertLoadingPb =
+                            alert.findViewById<ProgressBar>(R.id.topAlertLoadingPb)
+                        val topAlertTextTv = alert.findViewById<TextView>(R.id.topAlertTextTv)
+
+                        topAlertLoadingPb.visibility = if (loading) View.VISIBLE else View.GONE
+                        topAlertTextTv.text = text
+                    } else alert.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    fun showEmptyState(layoutResId: Int): View? {
+        rootView?.let {
+            viewContext?.let { context ->
+                var emptyState = it.findViewById<View>(R.id.emptyStateRootView)
+                if (emptyState == null) {
+                    emptyState = LayoutInflater.from(context).inflate(layoutResId, it, false)
+                    it.addView(emptyState)
+                }
+
+                emptyState?.visibility = View.VISIBLE
+                return emptyState
+            }
+        }
+        return null
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun errorEvent(exception: BaseException) {
         viewContext?.let { context ->
@@ -165,6 +211,8 @@ interface BaseView {
 
 abstract class BaseViewModel : ViewModel() {
     var windowLoadingState = MutableStateFlow(false)
+    var topAlertState = MutableStateFlow(TopAlert(false))
+    var windowEmptyState = MutableStateFlow<EmptyState?>(null)
 }
 
 

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
 import app.divarinterview.android.common.container.UserContainer
+import app.divarinterview.android.data.model.EmptyState
 import app.divarinterview.android.data.model.PostItemSDUIWidget
 import app.divarinterview.android.databinding.FragmentPostListBinding
 import app.divarinterview.android.ui.post.list.sdui.PostListEpoxyController
@@ -51,6 +54,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
 
         backPressHandling()
         showProgressBar()
+        showEmptyState()
         selectedCity()
         initList()
         listScrollListener()
@@ -84,17 +88,50 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
         }
 
         lifecycleScope.launch {
-            viewModel.loadingEvent.collect {
-                if (postList.isNotEmpty()) {
-                    val isFirstItemLoading = postList.first() == viewModel.loadingItem
+            viewModel.topAlertState.collect {
+                if (it.text != 0)
+                    setTopAlert(it.mustShow, it.loading, getString(it.text))
+                else
+                    setTopAlert(it.mustShow, it.loading, "")
+            }
+        }
+    }
 
-                    if (it && !isFirstItemLoading) {
-                        postList.add(0, viewModel.loadingItem)
-                    } else if (!it && isFirstItemLoading) {
-                        postList.removeFirst()
+    private fun showEmptyState() {
+        lifecycleScope.launch {
+            viewModel.windowEmptyState.collect {
+                it?.let { state ->
+                    if (state.mustShow) {
+                        val emptyState = showEmptyState(R.layout.view_window_empty_state)
+                        emptyState?.let { view ->
+                            val title: TextView = view.findViewById(R.id.emptyStateTitleTv)
+                            val subtitle: TextView = view.findViewById(R.id.emptyStateSubtitleTv)
+                            val actionBtn: Button = view.findViewById(R.id.emptyStateActionBtn)
+
+                            title.text = getString(state.title)
+
+                            if (state.subtitleText != null)
+                                subtitle.text = state.subtitleText
+                            else if (state.subtitleRes != 0)
+                                subtitle.text = getString(state.subtitleRes)
+
+                            actionBtn.visibility =
+                                if (state.actionButton) View.VISIBLE else View.GONE
+                            if (state.actionType == EmptyState.ActionType.TRY_AGAIN) {
+                                actionBtn.text = getString(R.string.public_try_again)
+                                actionBtn.setOnClickListener {
+                                    viewModel.getDataFromRemote(0, 0, true)
+                                }
+                            }
+                        }
+                    } else {
+                        val factory = layoutInflater;
+                        val emptyStateView =
+                            factory.inflate(R.layout.view_window_empty_state, null);
+                        val emptyStateRootView =
+                            emptyStateView.findViewById<View>(R.id.emptyStateRootView)
+                        emptyStateRootView.visibility = View.GONE
                     }
-
-                    epoxyController.setData(postList)
                 }
             }
         }
@@ -148,7 +185,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
                     isLoadingNewPage = true
                     postList.add(viewModel.loadingItem)
                     epoxyController.setData(postList)
-                    viewModel.fetchData(page, lastPostDate)
+                    viewModel.getDataFromLocal(page, lastPostDate)
                 }
             }
         })
@@ -158,7 +195,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
         binding.postListSwipeRefresh.setOnRefreshListener {
             page = 0
             lastPostDate = 0L
-            viewModel.getDataRemote(0, 0, true)
+            viewModel.getDataFromRemote(0, 0, true)
             binding.postListSwipeRefresh.isRefreshing = false
         }
     }

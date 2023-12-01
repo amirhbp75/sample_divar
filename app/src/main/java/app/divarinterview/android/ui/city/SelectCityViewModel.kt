@@ -2,8 +2,10 @@ package app.divarinterview.android.ui.city
 
 import androidx.lifecycle.viewModelScope
 import app.divarinterview.android.R
+import app.divarinterview.android.common.ApiException
 import app.divarinterview.android.common.BaseExceptionMapper
 import app.divarinterview.android.common.BaseViewModel
+import app.divarinterview.android.data.mapper.toErrorMessage
 import app.divarinterview.android.data.model.Centroid
 import app.divarinterview.android.data.model.City
 import app.divarinterview.android.data.repository.city.CityRepository
@@ -58,20 +60,30 @@ class SelectCityViewModel @Inject constructor(
                     }
 
                     is Resource.Error -> {
-                        var message: String? = null
-                        it.errorBodyJson?.let { errorBody ->
-                            if (errorBody.has("message")) {
-                                message = errorBody.getString("message")
+                        it.throwable?.let { error ->
+                            if (error is ApiException) {
+                                EventBus.getDefault().post(
+                                    BaseExceptionMapper.httpExceptionMapper(
+                                        errorCode = 0,
+                                        localMessage = it.message,
+                                        serverMessage = error.errorBody?.toErrorMessage()
+                                    )
+                                )
+                            } else {
+                                EventBus.getDefault().post(
+                                    BaseExceptionMapper.httpExceptionMapper(
+                                        errorCode = 0,
+                                        localMessage = it.message
+                                    )
+                                )
                             }
-                        }
-
-                        EventBus.getDefault().post(
-                            BaseExceptionMapper.httpExceptionMapper(
-                                errorCode = it.errorCode,
-                                localMessage = it.message,
-                                serverMessage = message
+                        } ?: kotlin.run {
+                            EventBus.getDefault().post(
+                                BaseExceptionMapper.httpExceptionMapper(
+                                    errorCode = 0,
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }
@@ -130,6 +142,7 @@ class SelectCityViewModel @Inject constructor(
     fun selectCity(city: City) {
         viewModelScope.launch {
             cityRepository.selectCity(city.id, city.name)
+
         }
     }
 }
