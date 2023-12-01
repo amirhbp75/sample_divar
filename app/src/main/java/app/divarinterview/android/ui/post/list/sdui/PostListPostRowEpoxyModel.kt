@@ -26,7 +26,7 @@ abstract class PostListPostRowEpoxyModel :
         data.thumbnail?.let {
             imageLoadingService.load(
                 postItemThumbnailIv,
-                it, R.drawable.bg_empty_state_thumbnail
+                it
             )
         }
         postItemTitleTv.text = data.title

@@ -2,8 +2,11 @@ package app.divarinterview.android.utils
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
+import android.view.MotionEvent
 import android.view.View
 
+@SuppressLint("ClickableViewAccessibility")
 fun View.clickButtonAnimation() {
     val scaleDownX = ObjectAnimator.ofFloat(this, "scaleX", 1.0f, 0.9f)
     val scaleDownY = ObjectAnimator.ofFloat(this, "scaleY", 1.0f, 0.9f)
@@ -22,13 +25,14 @@ fun View.clickButtonAnimation() {
         interpolator = android.view.animation.AccelerateDecelerateInterpolator()
     }
 
-    this.setOnTouchListener { _, event ->
+    setOnTouchListener { _, event ->
         when (event.action) {
-            android.view.MotionEvent.ACTION_DOWN -> {
+            MotionEvent.ACTION_DOWN -> {
                 scaleDown.start()
             }
 
-            android.view.MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_CANCEL -> {
                 scaleUp.start()
             }
         }

@@ -17,7 +17,7 @@ class PostListEpoxyController(
         data.forEach { widgetData ->
             when (widgetData.widgetType) {
                 PostItemWidgetType.TITLE_ROW -> {
-                    widgetData.data?.text?.let {
+                    widgetData.data.text?.let {
                         postListTitleRow {
                             id("titleRow")
                             text(it)
@@ -26,7 +26,7 @@ class PostListEpoxyController(
                 }
 
                 PostItemWidgetType.SUBTITLE_ROW -> {
-                    widgetData.data?.text?.let {
+                    widgetData.data.text?.let {
                         postListSubtitleRow {
                             id("subtitleRow")
                             text(it)
@@ -35,7 +35,7 @@ class PostListEpoxyController(
                 }
 
                 PostItemWidgetType.POST_ROW -> {
-                    widgetData.data?.let {
+                    widgetData.data.let {
                         PostListPostRowEpoxyModel_()
                             .id(it.token)
                             .data(it)

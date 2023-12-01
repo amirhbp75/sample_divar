@@ -7,7 +7,7 @@ class FrescoImageLoadingService : ImageLoadingService {
     override fun load(
         imageView: DivarCustomImageView,
         imageUrl: String,
-        placeHolder: Int?
+        placeHolder: Int
     ) {
         if (imageView is SimpleDraweeView) {
             imageView.setImageURI(imageUrl)
