@@ -1,5 +1,6 @@
 package app.divarinterview.android.ui.post.details.sdui
 
+import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import app.divarinterview.android.R
 import app.divarinterview.android.data.model.PostDetailsSliderItem
@@ -27,6 +28,8 @@ abstract class PostDetailsSliderEpoxyModel :
         sliderViewPager.offscreenPageLimit = 3
         if (slides.size > 1)
             sliderIndicator.attachTo(sliderViewPager)
+        else
+            sliderIndicator.visibility = View.GONE
 
         sliderViewPager.setCurrentItem(selected, false)
 

@@ -118,7 +118,7 @@ class PostListViewModel @Inject constructor(
                                 )
                                 windowLoadingState.value = false
 
-                                if (!offlineMode && pageContent.isEmpty())
+                                if (!offlineMode && pageContent.isEmpty() && _postListState.value == null)
                                     windowEmptyState.value = EmptyState(
                                         mustShow = true,
                                         actionType = EmptyState.ActionType.TRY_AGAIN,
