@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/sliderViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/sliderIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:layoutDirection="ltr"
+        app:dotsColor="@color/box"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="6dp"
+        app:dotsSpacing="2dp"
+        app:dotsWidthFactor="1"
+        app:progressMode="false"
+        app:selectedDotColor="@color/primary" />
+
+</FrameLayout>

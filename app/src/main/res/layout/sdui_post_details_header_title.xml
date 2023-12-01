@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="15dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+
+        <TextView
+            android:id="@+id/rowHeaderTitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textAppearance="?textAppearanceBoldText"
+            android:textColor="@color/onMainPrimary"
+            android:textSize="19sp"
+            tools:text="عنوان صفحه" />
+
+        <TextView
+            android:id="@+id/rowHeaderSubtitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:paddingTop="8dp"
+            android:textAppearance="?textAppearanceRegularText"
+            android:textColor="@color/onMainSecondary"
+            android:textSize="16sp"
+            tools:text="توضیحات تکمیلی" />
+
+
+    </LinearLayout>
+
+    <app.divarinterview.android.view.DivarCustomImageView
+        android:id="@+id/rowHeaderImageIv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        app:roundedCornerRadius="8dp"
+        tools:background="@drawable/bg_empty_state_thumbnail" />
+
+</LinearLayout>
