@@ -25,7 +25,8 @@ abstract class PostDetailsSliderEpoxyModel :
         val sliderAdapter = PostDetailsSliderAdapter(slides, imageLoadingService)
         sliderViewPager.adapter = sliderAdapter
         sliderViewPager.offscreenPageLimit = 3
-        sliderIndicator.attachTo(sliderViewPager)
+        if (slides.size > 1)
+            sliderIndicator.attachTo(sliderViewPager)
 
         sliderViewPager.setCurrentItem(selected, false)
 

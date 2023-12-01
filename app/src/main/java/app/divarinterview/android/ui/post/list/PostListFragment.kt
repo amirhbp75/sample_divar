@@ -117,8 +117,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
             viewModel.postListState.collect {
                 postList.takeIf { list ->
                     list.isNotEmpty() && list.last() == viewModel.loadingItem
-                }
-                    ?.removeLastOrNull()
+                }?.removeLastOrNull()
                 isLoadingNewPage = false
 
                 if (it != null) {

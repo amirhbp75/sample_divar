@@ -80,7 +80,6 @@ class PostListViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
-                        offlineMode = false
                         _loadingEvent.emit(false)
                         windowLoadingState.value = false
                         it.data?.let { data ->
@@ -90,12 +89,13 @@ class PostListViewModel @Inject constructor(
 
                             postRepository.runAsTransaction {
                                 if (page == 0) postRepository.deleteAll()
-                                postRepository.insertAll(postItemEntity)
+                                postRepository.insertPosts(postItemEntity)
                             }
 
+                            fetchComplete = false
+                            offlineMode = false
                             _postListState.value = data
                         } ?: kotlin.run {
-                            _postListState.value = null
                             EventBus.getDefault().post(
                                 BaseExceptionMapper.httpExceptionMapper(
                                     0,
@@ -108,11 +108,17 @@ class PostListViewModel @Inject constructor(
                     is Resource.Error -> {
                         if (it.errorCode == 999) {
                             _loadingEvent.emit(false)
+                            _postListState.value?.let { state ->
+                                _postListState.value = PostItemSDUIResponse(
+                                    state.widgetList.filter { list -> list.widgetType != PostItemWidgetType.LOADING_ROW },
+                                    state.lastPostDate
+                                )
+                            }
+
                             if (offlineMode && pageContent.isNotEmpty())
                                 windowLoadingState.value = false
                         }
 
-                        _postListState.value = null
                         var message: String? = null
                         it.errorBodyJson?.let { errorBody ->
                             if (errorBody.has("message")) {

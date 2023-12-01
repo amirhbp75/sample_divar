@@ -32,9 +32,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:gravity="end|center_vertical"
+            android:gravity="center_vertical"
+            android:maxWidth="240dp"
             android:textAppearance="?textAppearanceRegularText"
             android:textColor="@color/onMainSecondary"
+            android:textDirection="rtl"
             android:textSize="16sp"
             tools:text="توضیح" />
 

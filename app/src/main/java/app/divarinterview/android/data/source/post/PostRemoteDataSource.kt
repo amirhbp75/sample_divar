@@ -1,18 +1,19 @@
 package app.divarinterview.android.data.source.post
 
-import app.divarinterview.android.data.model.PostDetailsSDUIResponse
+import app.divarinterview.android.data.model.local.PostDetailsEntity
 import app.divarinterview.android.data.model.local.PostItemEntity
 import app.divarinterview.android.service.remote.ApiService
 import app.divarinterview.android.service.remote.callApi
-import app.divarinterview.android.utils.Resource
 import com.google.gson.JsonObject
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PostRemoteDataSource @Inject constructor(
     private val apiService: ApiService
 ) : PostDataSource {
 
+    /*
+    * Post List Actions
+    */
     override suspend fun getPostList(
         cityId: Int,
         page: Int,
@@ -24,11 +25,7 @@ class PostRemoteDataSource @Inject constructor(
         })
     }
 
-    override suspend fun getPostDetail(token: String) = callApi {
-        apiService.getPostDetails(token)
-    }
-
-    override suspend fun insertAll(posts: List<PostItemEntity>) {
+    override suspend fun insertPosts(posts: List<PostItemEntity>) {
         TODO("Not yet implemented")
     }
 
@@ -40,6 +37,26 @@ class PostRemoteDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
+
+    /*
+    * Post Details Actions
+    */
+    override suspend fun getPostDetail(token: String) = callApi {
+        apiService.getPostDetails(token)
+    }
+
+    override suspend fun insertDetails(post: PostDetailsEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override fun selectDetails(token: String): PostDetailsEntity? {
+        TODO("Not yet implemented")
+    }
+
+
+    /*
+    * Utils Functions
+    */
     override suspend fun <R> runAsTransaction(block: suspend () -> R) {
         TODO("Not yet implemented")
     }
