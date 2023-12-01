@@ -4,8 +4,9 @@ import app.divarinterview.android.data.model.PostItemData
 import app.divarinterview.android.data.model.PostItemSDUIWidget
 import app.divarinterview.android.data.model.local.PostItemEntity
 
-fun PostItemSDUIWidget.toPostItemEntity(): PostItemEntity {
+fun PostItemSDUIWidget.toPostItemEntity(cityId: Int): PostItemEntity {
     return PostItemEntity(
+        cityId = cityId,
         widgetType = widgetType,
         text = data.text,
         title = data.title,

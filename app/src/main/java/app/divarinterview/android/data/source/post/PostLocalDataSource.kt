@@ -1,6 +1,7 @@
 package app.divarinterview.android.data.source.post
 
 import androidx.room.withTransaction
+import app.divarinterview.android.common.container.UserContainer
 import app.divarinterview.android.data.database.DivarDatabase
 import app.divarinterview.android.data.model.PostDetailsSDUIResponse
 import app.divarinterview.android.data.model.PostItemSDUIResponse
@@ -32,7 +33,7 @@ class PostLocalDataSource @Inject constructor(
         database.postItemDao.deleteAll()
 
     override fun selectPage(pagingSize: Int, offset: Int) =
-        database.postItemDao.selectPage(pagingSize, offset)
+        database.postItemDao.selectPage(UserContainer.cityId, pagingSize, offset)
 
 
     /*

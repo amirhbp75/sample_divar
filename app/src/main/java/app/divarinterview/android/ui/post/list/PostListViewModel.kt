@@ -88,7 +88,7 @@ class PostListViewModel @Inject constructor(
                         windowLoadingState.value = false
                         it.data?.let { data ->
                             val postItemEntity = data.widgetList.map { widgets ->
-                                widgets.toPostItemEntity()
+                                widgets.toPostItemEntity(UserContainer.cityId)
                             }
 
                             postRepository.runAsTransaction {

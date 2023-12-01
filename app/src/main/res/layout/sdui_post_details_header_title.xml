@@ -47,6 +47,7 @@
         android:id="@+id/rowHeaderImageIv"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginStart="10dp"
         android:scaleType="centerCrop"
         app:roundedCornerRadius="8dp"
         tools:background="@drawable/bg_empty_state_thumbnail" />

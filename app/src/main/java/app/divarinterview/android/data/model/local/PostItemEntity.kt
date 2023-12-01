@@ -9,6 +9,7 @@ import app.divarinterview.android.data.model.PostItemWidgetType
 data class PostItemEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val cityId: Int,
     val widgetType: PostItemWidgetType,
     val text: String?,
     val title: String?,

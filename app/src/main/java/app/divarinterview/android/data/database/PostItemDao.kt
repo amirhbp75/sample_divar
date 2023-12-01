@@ -15,6 +15,6 @@ interface PostItemDao {
     @Query("DELETE FROM PostItemEntity")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM PostItemEntity LIMIT :pagingSize OFFSET :offset")
-    fun selectPage(pagingSize: Int, offset: Int): List<PostItemEntity>
+    @Query("SELECT * FROM PostItemEntity WHERE cityId = :cityId LIMIT :pagingSize OFFSET :offset")
+    fun selectPage(cityId: Int, pagingSize: Int, offset: Int): List<PostItemEntity>
 }
