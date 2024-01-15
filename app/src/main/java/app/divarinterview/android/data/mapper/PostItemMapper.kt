@@ -1,8 +1,8 @@
 package app.divarinterview.android.data.mapper
 
-import app.divarinterview.android.data.model.PostItemData
 import app.divarinterview.android.data.model.PostItemSDUIWidget
 import app.divarinterview.android.data.model.local.PostItemEntity
+import app.divarinterview.android.domain.PostItem
 
 fun PostItemSDUIWidget.toPostItemEntity(cityId: Int): PostItemEntity {
     return PostItemEntity(
@@ -17,9 +17,14 @@ fun PostItemSDUIWidget.toPostItemEntity(cityId: Int): PostItemEntity {
     )
 }
 
-fun PostItemEntity.toPostItemSDUIWidget(): PostItemSDUIWidget {
-    return PostItemSDUIWidget(
+fun PostItemEntity.toPostItem(): PostItem {
+    return PostItem(
         widgetType = widgetType,
-        data = PostItemData(text, title, token, price, thumbnail, district)
+        text = text,
+        title = title,
+        token = token,
+        price = price,
+        thumbnail = thumbnail,
+        district = district
     )
 }

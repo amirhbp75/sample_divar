@@ -32,8 +32,8 @@ class PostLocalDataSource @Inject constructor(
     override suspend fun deleteAll() =
         database.postItemDao.deleteAll()
 
-    override fun selectPage(pagingSize: Int, offset: Int) =
-        database.postItemDao.selectPage(UserContainer.cityId, pagingSize, offset)
+    override fun selectPage() =
+        database.postItemDao.selectPage()
 
 
     /*

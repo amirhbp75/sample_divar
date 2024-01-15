@@ -2,13 +2,13 @@ package app.divarinterview.android.ui.post.list.sdui
 
 import android.view.View
 import app.divarinterview.android.R
-import app.divarinterview.android.data.model.PostItemData
 import app.divarinterview.android.databinding.SduiPostListCardBinding
 import app.divarinterview.android.di.DependencyInjector
 import app.divarinterview.android.utils.ViewBindingKotlinModel
 import app.divarinterview.android.utils.clickButtonAnimation
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
+import app.divarinterview.android.domain.PostItem
 
 @EpoxyModelClass
 abstract class PostListPostRowEpoxyModel :
@@ -17,7 +17,7 @@ abstract class PostListPostRowEpoxyModel :
     private val imageLoadingService = DependencyInjector.getImageLoadingService()
 
     @EpoxyAttribute
-    lateinit var data: PostItemData
+    lateinit var data: PostItem
 
     @EpoxyAttribute
     lateinit var onClick: (String) -> Unit

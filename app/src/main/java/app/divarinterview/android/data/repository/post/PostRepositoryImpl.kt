@@ -1,7 +1,12 @@
 package app.divarinterview.android.data.repository.post
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import app.divarinterview.android.data.model.local.PostDetailsEntity
 import app.divarinterview.android.data.model.local.PostItemEntity
+import app.divarinterview.android.data.paging.PostPagingEvent
+import app.divarinterview.android.data.paging.PostRemoteMediator
 import app.divarinterview.android.data.source.post.PostDataSource
 import javax.inject.Inject
 import javax.inject.Named
@@ -14,11 +19,28 @@ class PostRepositoryImpl @Inject constructor(
     /*
     * Post List Actions
     */
+    @OptIn(ExperimentalPagingApi::class)
     override suspend fun getPostList(
-        cityId: Int,
-        page: Int,
-        last: Long
-    ) = remoteDataSource.getPostList(cityId, page, last)
+        eventCallback: (PostPagingEvent) -> Unit
+    ): Pager<Int, PostItemEntity> {
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = 15,
+                prefetchDistance = 4,
+                initialLoadSize = 15
+            ),
+            remoteMediator = PostRemoteMediator(
+                remoteDataSource = remoteDataSource,
+                localDataSource = localDataSource,
+                eventCallback = eventCallback
+            ),
+            pagingSourceFactory = {
+                localDataSource.selectPage()
+            }
+        )
+
+    }
 
     override suspend fun insertPosts(posts: List<PostItemEntity>) =
         localDataSource.insertPosts(posts)
@@ -26,8 +48,8 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun deleteAll() =
         localDataSource.deleteAll()
 
-    override fun selectPage(pagingSize: Int, offset: Int) =
-        localDataSource.selectPage(pagingSize, offset)
+    override fun selectPage() =
+        localDataSource.selectPage()
 
 
     /*

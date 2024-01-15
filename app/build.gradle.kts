@@ -43,8 +43,8 @@ android {
 
 dependencies {
     val splashscreenVersion = "1.0.1"
-    val hiltVersion = "2.44"
-    val navVersion = "2.7.5"
+    val hiltVersion = "2.45"
+    val navVersion = "2.7.6"
     val gsonVersion = "2.10.1"
     val retrofitVersion = "2.9.0"
     val coroutineVersion = "1.7.3"
@@ -54,7 +54,8 @@ dependencies {
     val epoxyVersion = "5.1.3"
     val recyclerviewVersion = "1.3.2"
     val swiperefreshVersion = "1.1.0"
-    val roomVersion = "2.6.0"
+    val roomVersion = "2.6.1"
+    val pagingVersion = "3.2.1"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -99,6 +100,10 @@ dependencies {
     // Epoxy
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     ksp("com.airbnb.android:epoxy-processor:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-paging3:$epoxyVersion")
+
+    //Paging
+    implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
 
     // Room
     implementation("androidx.room:room-ktx:$roomVersion")

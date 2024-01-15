@@ -1,5 +1,6 @@
 package app.divarinterview.android.data.source.post
 
+import androidx.paging.PagingSource
 import app.divarinterview.android.data.model.local.PostDetailsEntity
 import app.divarinterview.android.data.model.local.PostItemEntity
 import app.divarinterview.android.service.remote.ApiService
@@ -33,7 +34,7 @@ class PostRemoteDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun selectPage(pagingSize: Int, offset: Int): List<PostItemEntity> {
+    override fun selectPage(): PagingSource<Int, PostItemEntity> {
         TODO("Not yet implemented")
     }
 

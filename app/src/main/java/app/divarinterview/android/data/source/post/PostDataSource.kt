@@ -1,5 +1,6 @@
 package app.divarinterview.android.data.source.post
 
+import androidx.paging.PagingSource
 import app.divarinterview.android.data.model.PostDetailsSDUIResponse
 import app.divarinterview.android.data.model.PostItemSDUIResponse
 import app.divarinterview.android.data.model.local.PostDetailsEntity
@@ -26,7 +27,7 @@ interface PostDataSource {
 
     suspend fun deleteAll()
 
-    fun selectPage(pagingSize: Int, offset: Int): List<PostItemEntity>
+    fun selectPage(): PagingSource<Int, PostItemEntity>
 
 
     /*

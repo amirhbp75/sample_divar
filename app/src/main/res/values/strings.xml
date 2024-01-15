@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Divar Interview</string>
 
-    <string name="welcome_slogan">تسک مصاحبه شغلی دیوار</string>
+    <string name="welcome_slogan">نمونه آموزشی اپلیکیشن دیوار</string>
     <string name="welcome_login_btn">ورود به برنامه</string>
 
     <string name="select_city_input_hint">شهر خود را انتخاب نمایید</string>

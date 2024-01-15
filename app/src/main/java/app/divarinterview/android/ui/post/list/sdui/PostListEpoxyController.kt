@@ -1,54 +1,57 @@
 package app.divarinterview.android.ui.post.list.sdui
 
-import app.divarinterview.android.data.model.PostItemSDUIWidget
 import app.divarinterview.android.data.model.PostItemWidgetType
-import com.airbnb.epoxy.TypedEpoxyController
+import app.divarinterview.android.domain.PostItem
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging3.PagingDataEpoxyController
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
-
+@ObsoleteCoroutinesApi
 class PostListEpoxyController(
     private val onItemClicked: (String) -> Unit
-) : TypedEpoxyController<List<PostItemSDUIWidget>>() {
+) : PagingDataEpoxyController<PostItem>() {
 
-    override fun buildModels(data: List<PostItemSDUIWidget>) {
-        if (data.isEmpty()) {
-            return
-        }
-
-        data.forEach { widgetData ->
-            when (widgetData.widgetType) {
-                PostItemWidgetType.TITLE_ROW -> {
-                    widgetData.data.text?.let {
-                        postListTitleRow {
-                            id("titleRow")
-                            text(it)
-                        }
-                    }
+    override fun buildItemModel(currentPosition: Int, item: PostItem?): EpoxyModel<*> {
+        return when (item?.widgetType) {
+            PostItemWidgetType.TITLE_ROW -> {
+                item.text?.let {
+                    PostListTitleRowEpoxyModel_()
+                        .id("titleRow")
+                        .text(it)
+                } ?: run {
+                    error("Unknown EpisodesUiModel type")
                 }
+            }
 
-                PostItemWidgetType.SUBTITLE_ROW -> {
-                    widgetData.data.text?.let {
-                        postListSubtitleRow {
-                            id("subtitleRow")
-                            text(it)
-                        }
-                    }
+            PostItemWidgetType.SUBTITLE_ROW -> {
+                item.text?.let {
+                    PostListSubtitleRowEpoxyModel_()
+                        .id("subtitleRow")
+                        .text(it)
+                } ?: run {
+                    error("Unknown EpisodesUiModel type")
                 }
+            }
 
-                PostItemWidgetType.POST_ROW -> {
-                    widgetData.data.let {
-                        PostListPostRowEpoxyModel_()
-                            .id(it.token)
-                            .data(it)
-                            .onClick(onItemClicked)
-                            .addTo(this)
-                    }
+            PostItemWidgetType.POST_ROW -> {
+                item.let {
+                    PostListPostRowEpoxyModel_()
+                        .id(it.token)
+                        .data(it)
+                        .onClick(onItemClicked)
+                } ?: run {
+                    error("Unknown EpisodesUiModel type")
                 }
+            }
 
-                PostItemWidgetType.LOADING_ROW -> {
-                    postListLoadingRow {
-                        id("loading")
-                    }
-                }
+            PostItemWidgetType.LOADING_ROW -> {
+                PostListLoadingRowEpoxyModel_()
+                    .id("loading")
+            }
+
+            else -> {
+                PostListEmptyRowEpoxyModel_()
+                    .id("titleRow")
             }
         }
     }

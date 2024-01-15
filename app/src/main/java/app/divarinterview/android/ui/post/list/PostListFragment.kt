@@ -1,5 +1,6 @@
 package app.divarinterview.android.ui.post.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,29 +11,22 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import app.divarinterview.android.R
 import app.divarinterview.android.common.BaseFragment
 import app.divarinterview.android.common.container.UserContainer
 import app.divarinterview.android.data.model.EmptyState
-import app.divarinterview.android.data.model.PostItemSDUIWidget
 import app.divarinterview.android.databinding.FragmentPostListBinding
 import app.divarinterview.android.ui.post.list.sdui.PostListEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.launch
 
+@OptIn(ObsoleteCoroutinesApi::class)
 @AndroidEntryPoint
 class PostListFragment : BaseFragment<FragmentPostListBinding>() {
 
     private val viewModel: PostListViewModel by viewModels()
-
-    lateinit var epoxyController: PostListEpoxyController
-    var postList: MutableList<PostItemSDUIWidget> = mutableListOf()
-
-    private var isLoadingNewPage: Boolean = false
-    private var page: Int = 0
-    private var lastPostDate: Long = 0
+    private lateinit var epoxyController: PostListEpoxyController
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -44,20 +38,11 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        epoxyController = PostListEpoxyController(onItemClicked = {
-            findNavController().navigate(
-                R.id.action_postListFragment_to_postDetailFragment,
-                Bundle().apply {
-                    putString("token", it)
-                })
-        })
-
         backPressHandling()
         showProgressBar()
         showEmptyState()
         selectedCity()
         initList()
-        listScrollListener()
         onSwipeRefresh()
     }
 
@@ -120,7 +105,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
                             if (state.actionType == EmptyState.ActionType.TRY_AGAIN) {
                                 actionBtn.text = getString(R.string.public_try_again)
                                 actionBtn.setOnClickListener {
-                                    viewModel.getDataFromRemote(0, 0, true)
+                                    epoxyController.refresh()
                                 }
                             }
                         }
@@ -149,54 +134,33 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>() {
     private fun initList() {
         binding.postListRv.itemAnimator = null
         binding.postListRv.setController(epoxyController)
-
-        lifecycleScope.launch {
-            viewModel.postListState.collect {
-                postList.takeIf { list ->
-                    list.isNotEmpty() && list.last() == viewModel.loadingItem
-                }?.removeLastOrNull()
-                isLoadingNewPage = false
-
-                if (it != null) {
-                    if ((!viewModel.offlineMode && lastPostDate == 0L) || it.lastPostDate == 0L) {
-                        postList = it.widgetList.toMutableList()
-                        page = 0
-                    } else
-                        postList.addAll(it.widgetList.toMutableList())
-
-                    epoxyController.setData(postList)
-                    page++
-                    if (!viewModel.offlineMode) lastPostDate = it.lastPostDate
-                }
-            }
-        }
-    }
-
-    private fun listScrollListener() {
-        binding.postListRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val totalItemCount = layoutManager.itemCount
-                val remainToEnd = 5
-
-                if (!viewModel.fetchComplete && !isLoadingNewPage && layoutManager.findLastCompletelyVisibleItemPosition() > totalItemCount - remainToEnd) {
-                    isLoadingNewPage = true
-                    postList.add(viewModel.loadingItem)
-                    epoxyController.setData(postList)
-                    viewModel.getDataFromLocal(page, lastPostDate)
-                }
-            }
-        })
     }
 
     private fun onSwipeRefresh() {
         binding.postListSwipeRefresh.setOnRefreshListener {
-            page = 0
-            lastPostDate = 0L
-            viewModel.getDataFromRemote(0, 0, true)
+            epoxyController.refresh()
+            viewModel.reload = true
             binding.postListSwipeRefresh.isRefreshing = false
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        epoxyController = PostListEpoxyController(onItemClicked = {
+            findNavController().navigate(
+                R.id.action_postListFragment_to_postDetailFragment,
+                Bundle().apply {
+                    putString("token", it)
+                })
+        })
+
+        lifecycleScope.launch {
+            viewModel.postListState.collect { paging ->
+                paging?.let {
+                    epoxyController.submitData(it)
+                }
+            }
         }
     }
 }
